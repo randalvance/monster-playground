@@ -1,0 +1,45 @@
+{
+  "pokemon": {
+    "id": 4,
+    "rawId": "0004",
+    "name": "Charmander"
+  },
+  "form": {
+    "name": "Charmander",
+    "fullName": "Charmander",
+    "canon": true
+  },
+  "animation": {
+    "action": "Strike",
+    "frameWidth": 56,
+    "frameHeight": 56,
+    "frameCount": 9,
+    "durations": [
+      2,
+      6,
+      2,
+      4,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "totalTicks": 24,
+    "totalMs": 400
+  },
+  "sheet": {
+    "width": 504,
+    "height": 448,
+    "directions": [
+      "Down",
+      "DownRight",
+      "Right",
+      "UpRight",
+      "Up",
+      "UpLeft",
+      "Left",
+      "DownLeft"
+    ]
+  }
+}

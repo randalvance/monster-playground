@@ -1,0 +1,40 @@
+{
+  "pokemon": {
+    "id": 25,
+    "rawId": "0025",
+    "name": "Pikachu"
+  },
+  "form": {
+    "name": "Pikachu",
+    "fullName": "Pikachu",
+    "canon": true
+  },
+  "animation": {
+    "action": "Walk",
+    "frameWidth": 32,
+    "frameHeight": 40,
+    "frameCount": 4,
+    "durations": [
+      8,
+      10,
+      8,
+      10
+    ],
+    "totalTicks": 36,
+    "totalMs": 600
+  },
+  "sheet": {
+    "width": 128,
+    "height": 320,
+    "directions": [
+      "Down",
+      "DownRight",
+      "Right",
+      "UpRight",
+      "Up",
+      "UpLeft",
+      "Left",
+      "DownLeft"
+    ]
+  }
+}

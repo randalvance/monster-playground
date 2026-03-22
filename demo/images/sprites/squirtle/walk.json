@@ -1,0 +1,40 @@
+{
+  "pokemon": {
+    "id": 7,
+    "rawId": "0007",
+    "name": "Squirtle"
+  },
+  "form": {
+    "name": "Squirtle",
+    "fullName": "Squirtle",
+    "canon": true
+  },
+  "animation": {
+    "action": "Walk",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frameCount": 4,
+    "durations": [
+      12,
+      8,
+      12,
+      8
+    ],
+    "totalTicks": 40,
+    "totalMs": 667
+  },
+  "sheet": {
+    "width": 128,
+    "height": 256,
+    "directions": [
+      "Down",
+      "DownRight",
+      "Right",
+      "UpRight",
+      "Up",
+      "UpLeft",
+      "Left",
+      "DownLeft"
+    ]
+  }
+}

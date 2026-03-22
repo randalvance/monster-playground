@@ -1,0 +1,42 @@
+{
+  "pokemon": {
+    "id": 1,
+    "rawId": "0001",
+    "name": "Bulbasaur"
+  },
+  "form": {
+    "name": "Bulbasaur",
+    "fullName": "Bulbasaur",
+    "canon": true
+  },
+  "animation": {
+    "action": "Walk",
+    "frameWidth": 40,
+    "frameHeight": 40,
+    "frameCount": 6,
+    "durations": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "totalTicks": 24,
+    "totalMs": 400
+  },
+  "sheet": {
+    "width": 240,
+    "height": 320,
+    "directions": [
+      "Down",
+      "DownRight",
+      "Right",
+      "UpRight",
+      "Up",
+      "UpLeft",
+      "Left",
+      "DownLeft"
+    ]
+  }
+}

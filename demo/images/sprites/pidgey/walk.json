@@ -1,0 +1,41 @@
+{
+  "pokemon": {
+    "id": 16,
+    "rawId": "0016",
+    "name": "Pidgey"
+  },
+  "form": {
+    "name": "Pidgey",
+    "fullName": "Pidgey",
+    "canon": true
+  },
+  "animation": {
+    "action": "Walk",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frameCount": 5,
+    "durations": [
+      6,
+      4,
+      4,
+      4,
+      4
+    ],
+    "totalTicks": 22,
+    "totalMs": 367
+  },
+  "sheet": {
+    "width": 160,
+    "height": 256,
+    "directions": [
+      "Down",
+      "DownRight",
+      "Right",
+      "UpRight",
+      "Up",
+      "UpLeft",
+      "Left",
+      "DownLeft"
+    ]
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "pokemon": {
+    "id": 39,
+    "rawId": "0039",
+    "name": "Jigglypuff"
+  },
+  "form": {
+    "name": "Jigglypuff",
+    "fullName": "Jigglypuff",
+    "canon": true
+  },
+  "animation": {
+    "action": "Walk",
+    "frameWidth": 32,
+    "frameHeight": 40,
+    "frameCount": 5,
+    "durations": [
+      6,
+      4,
+      4,
+      4,
+      6
+    ],
+    "totalTicks": 24,
+    "totalMs": 400
+  },
+  "sheet": {
+    "width": 160,
+    "height": 320,
+    "directions": [
+      "Down",
+      "DownRight",
+      "Right",
+      "UpRight",
+      "Up",
+      "UpLeft",
+      "Left",
+      "DownLeft"
+    ]
+  }
+}

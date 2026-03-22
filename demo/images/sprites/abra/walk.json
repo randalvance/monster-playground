@@ -1,0 +1,44 @@
+{
+  "pokemon": {
+    "id": 63,
+    "rawId": "0063",
+    "name": "Abra"
+  },
+  "form": {
+    "name": "Abra",
+    "fullName": "Abra",
+    "canon": true
+  },
+  "animation": {
+    "action": "Walk",
+    "frameWidth": 32,
+    "frameHeight": 48,
+    "frameCount": 8,
+    "durations": [
+      8,
+      10,
+      8,
+      10,
+      8,
+      10,
+      8,
+      10
+    ],
+    "totalTicks": 72,
+    "totalMs": 1200
+  },
+  "sheet": {
+    "width": 256,
+    "height": 384,
+    "directions": [
+      "Down",
+      "DownRight",
+      "Right",
+      "UpRight",
+      "Up",
+      "UpLeft",
+      "Left",
+      "DownLeft"
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "pokemon": {
+    "id": 813,
+    "rawId": "0813",
+    "name": "Scorbunny"
+  },
+  "form": {
+    "name": "Scorbunny",
+    "fullName": "Scorbunny",
+    "canon": true
+  },
+  "animation": {
+    "action": "Walk",
+    "frameWidth": 24,
+    "frameHeight": 40,
+    "frameCount": 4,
+    "durations": [
+      6,
+      8,
+      6,
+      8
+    ],
+    "totalTicks": 28,
+    "totalMs": 467
+  },
+  "sheet": {
+    "width": 96,
+    "height": 320,
+    "directions": [
+      "Down",
+      "DownRight",
+      "Right",
+      "UpRight",
+      "Up",
+      "UpLeft",
+      "Left",
+      "DownLeft"
+    ]
+  }
+}

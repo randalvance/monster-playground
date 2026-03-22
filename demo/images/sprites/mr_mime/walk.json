@@ -1,0 +1,40 @@
+{
+  "pokemon": {
+    "id": 122,
+    "rawId": "0122",
+    "name": "Mr_Mime"
+  },
+  "form": {
+    "name": "Mr_Mime",
+    "fullName": "Mr_Mime",
+    "canon": true
+  },
+  "animation": {
+    "action": "Walk",
+    "frameWidth": 32,
+    "frameHeight": 48,
+    "frameCount": 4,
+    "durations": [
+      8,
+      12,
+      8,
+      12
+    ],
+    "totalTicks": 40,
+    "totalMs": 667
+  },
+  "sheet": {
+    "width": 128,
+    "height": 384,
+    "directions": [
+      "Down",
+      "DownRight",
+      "Right",
+      "UpRight",
+      "Up",
+      "UpLeft",
+      "Left",
+      "DownLeft"
+    ]
+  }
+}
