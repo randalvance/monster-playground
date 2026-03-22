@@ -196,6 +196,7 @@ Characters move tile-by-tile in 4 directions (up, down, left, right — no diago
 - During movement, uses walk direction sprite (e.g., `walkDown`) if it exists in the character's sprites
 - Falls back to the current external state if no walk sprite exists
 - External `state` prop takes priority when idle
+- If the `state` value has no matching key in `sprites`, the state is ignored (character renders nothing / remains on previous frame)
 
 **Walk direction convention:**
 - The component looks for `walkUp`, `walkDown`, `walkLeft`, `walkRight` in the sprites map
@@ -217,11 +218,11 @@ Characters move tile-by-tile in 4 directions (up, down, left, right — no diago
 
 ## Walkable Mask
 
-The mask is a separate image file matching the map dimensions. Each pixel maps to a tile:
-- **White (or near-white)** = walkable
-- **Black (or near-black)** = blocked
+The mask is a separate image matching the map's **pixel dimensions** (`mapWidth * tileSize` x `mapHeight * tileSize`).
+- **White** = walkable
+- **Black** = blocked
 
-On load, the mask image is drawn to an offscreen canvas. The `isWalkable` function samples the pixel at the center of the corresponding tile and checks if the red channel exceeds a threshold (e.g., > 128).
+On load, the mask image is drawn to an offscreen canvas. To determine if a tile is walkable, `isWalkable(tileX, tileY)` samples **all pixels** within that tile's bounds. If **any pixel** in the tile is black (blocked), the entire tile is considered blocked. This means a walkable mask border that crosses even one pixel of a tile grid cell will prevent characters from entering that tile.
 
 ## Package & Build
 
