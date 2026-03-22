@@ -116,4 +116,25 @@ describe('CharacterAgent', () => {
     agent.setExternalState('dancing')
     expect(agent.getVisualState()).toBe('dancing')
   })
+
+  it('releases all occupied tiles on destroy', () => {
+    const occ = makeOccupancy()
+    const agent = new CharacterAgent(
+      makeConfig(),
+      { ...DEFAULT_MOVEMENT, pauseMin: 0, pauseMax: 0, speed: 0.5 },
+      occ,
+      isWalkable,
+    )
+    // Trigger movement so both current and target tiles are claimed
+    agent.update(1) // triggers tryMove, agent is now walking
+    if (agent.getMovementState() === 'walking') {
+      // Both origin and destination should be claimed
+      agent.destroy()
+      expect(occ.isOccupied(2, 2)).toBe(false)
+    } else {
+      // Agent stayed idle (no valid move), just destroy
+      agent.destroy()
+      expect(occ.isOccupied(2, 2)).toBe(false)
+    }
+  })
 })

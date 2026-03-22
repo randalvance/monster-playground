@@ -176,4 +176,11 @@ export class CharacterAgent {
   getId(): string {
     return this.config.id
   }
+
+  destroy(): void {
+    this.occupancy.release(this.tileX, this.tileY)
+    if (this.movementState === 'walking') {
+      this.occupancy.release(this.targetTileX, this.targetTileY)
+    }
+  }
 }
