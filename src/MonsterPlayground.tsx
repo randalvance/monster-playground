@@ -28,6 +28,7 @@ export function MonsterPlayground(props: MonsterPlaygroundProps) {
   const rafRef = useRef<number>(0)
   const lastTimeRef = useRef<number>(0)
   const followTimerRef = useRef<number>(0)
+  const followTargetRef = useRef<string | null>(null)
   const [bubbles, setBubbles] = useState<SpeechBubbleData[]>([])
 
   const mapPixelWidth = mapWidth * tileSize
@@ -74,6 +75,7 @@ export function MonsterPlayground(props: MonsterPlaygroundProps) {
       engineRef.current.setCamera(camera)
       // Start following a random character
       const targetId = engineRef.current.pickRandomFollowTarget()
+      followTargetRef.current = targetId
       const agent = engineRef.current.getAgentById(targetId)
       if (agent) {
         const pos = agent.getPixelPosition()
@@ -142,7 +144,12 @@ export function MonsterPlayground(props: MonsterPlaygroundProps) {
       if (followTimerRef.current >= cameraFollowInterval && camera) {
         followTimerRef.current = 0
         const targetId = engine.pickRandomFollowTarget()
-        const agent = engine.getAgentById(targetId)
+        followTargetRef.current = targetId
+      }
+
+      // Continuously update follow target position so camera tracks the moving character
+      if (camera && followTargetRef.current) {
+        const agent = engine.getAgentById(followTargetRef.current)
         if (agent) {
           const pos = agent.getPixelPosition()
           camera.setFollowTarget(pos.x * tileSize, pos.y * tileSize)
@@ -213,6 +220,31 @@ export function MonsterPlayground(props: MonsterPlaygroundProps) {
     cameraRef.current.zoomBy(-e.deltaY)
   }, [])
 
+  const handleZoomIn = useCallback(() => {
+    cameraRef.current?.zoomStep(1)
+  }, [])
+
+  const handleZoomOut = useCallback(() => {
+    cameraRef.current?.zoomStep(-1)
+  }, [])
+
+  const zoomButtonStyle: React.CSSProperties = {
+    width: 36,
+    height: 36,
+    fontSize: 20,
+    fontWeight: 'bold',
+    border: '1px solid rgba(0,0,0,0.3)',
+    borderRadius: 6,
+    background: 'rgba(255,255,255,0.85)',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
+    userSelect: 'none',
+    lineHeight: 1,
+  }
+
   return (
     <div
       ref={containerRef}
@@ -236,6 +268,34 @@ export function MonsterPlayground(props: MonsterPlaygroundProps) {
         style={{ display: 'block', width: '100%', height: '100%' }}
       />
       <SpeechBubbleOverlay bubbles={bubbles} />
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 16,
+          left: 16,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 4,
+          zIndex: 10,
+        }}
+      >
+        <button
+          style={zoomButtonStyle}
+          onClick={handleZoomIn}
+          aria-label="Zoom in"
+          title="Zoom in"
+        >
+          +
+        </button>
+        <button
+          style={zoomButtonStyle}
+          onClick={handleZoomOut}
+          aria-label="Zoom out"
+          title="Zoom out"
+        >
+          −
+        </button>
+      </div>
     </div>
   )
 }

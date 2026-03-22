@@ -19,6 +19,7 @@ export class GameEngine {
   private mapRenderer: MapRenderer
   private camera: CameraController | null = null
   private movement: MovementConfig
+  private spriteImages = new Map<string, HTMLImageElement>()
 
   constructor(config: GameEngineConfig) {
     this.movement = { ...DEFAULT_MOVEMENT, ...config.defaultMovement }
@@ -37,10 +38,50 @@ export class GameEngine {
   }
 
   async loadAssets(backgroundSrc: string, maskSrc: string): Promise<void> {
+    const spriteLoads = this.loadSpriteImages()
     await Promise.all([
       this.mapRenderer.loadBackground(backgroundSrc),
       this.mapRenderer.loadMask(maskSrc),
+      spriteLoads,
     ])
+    this.relocateAgentsToWalkable()
+  }
+
+  private async loadSpriteImages(): Promise<void> {
+    const srcSet = new Set<string>()
+    for (const agent of this.agents) {
+      const sprite = agent.getCurrentSprite()
+      if (sprite?.src) srcSet.add(sprite.src)
+      // Also collect all sprite sources from config
+      for (const s of Object.values(agent.getConfig().sprites)) {
+        if (s.src) srcSet.add(s.src)
+      }
+    }
+    const loads = Array.from(srcSet).map(async (src) => {
+      const img = await this.loadImage(src)
+      this.spriteImages.set(src, img)
+    })
+    await Promise.all(loads)
+  }
+
+  private loadImage(src: string): Promise<HTMLImageElement> {
+    return new Promise((resolve, reject) => {
+      const img = new Image()
+      img.onload = () => resolve(img)
+      img.onerror = reject
+      img.src = src
+    })
+  }
+
+  private relocateAgentsToWalkable(): void {
+    const taken = new Set<string>()
+    for (const agent of this.agents) {
+      const pos = this.mapRenderer.findRandomWalkablePosition(taken)
+      if (pos) {
+        agent.relocate(pos.x, pos.y)
+        taken.add(`${pos.x},${pos.y}`)
+      }
+    }
   }
 
   setCamera(camera: CameraController): void {
@@ -70,10 +111,23 @@ export class GameEngine {
       const pos = agent.getPixelPosition()
       const anim = agent.getAnimator()
       const rect = anim.getSourceRect()
-      // In a real render, we'd draw the sprite image here
-      // For now, this establishes the render pipeline
-      ctx.fillStyle = '#FFD600'
-      ctx.fillRect(pos.x * tileSize, pos.y * tileSize, sprite.frameWidth, sprite.frameHeight)
+      const img = sprite.src ? this.spriteImages.get(sprite.src) : undefined
+      if (img) {
+        ctx.drawImage(
+          img,
+          rect.sx,
+          rect.sy,
+          rect.sw,
+          rect.sh,
+          pos.x * tileSize,
+          pos.y * tileSize,
+          sprite.frameWidth,
+          sprite.frameHeight,
+        )
+      } else {
+        ctx.fillStyle = '#FFD600'
+        ctx.fillRect(pos.x * tileSize, pos.y * tileSize, sprite.frameWidth, sprite.frameHeight)
+      }
     }
 
     ctx.restore()

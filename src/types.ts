@@ -5,6 +5,7 @@ export interface SpriteConfig {
   frameWidth: number
   frameHeight: number
   frameCount: number
+  row?: number
 }
 
 export interface MovementConfig {

@@ -46,9 +46,9 @@ describe('CameraController', () => {
 
   it('sets follow target', () => {
     const cam = new CameraController(defaults)
-    cam.setFollowTarget(100, 100)
+    cam.setFollowTarget(300, 200)
     cam.update(16) // one frame
-    // Camera should start moving toward target
+    // Camera should start moving toward the centered target
     const offset = cam.getOffset()
     expect(offset.x).toBeGreaterThan(0)
   })

@@ -25,6 +25,19 @@ export class CameraController {
 
   constructor(private config: CameraConfig) {
     this.zoom = config.initialZoom
+    this.clampZoom()
+    this.clampOffset()
+  }
+
+  private getEffectiveMinZoom(): number {
+    const fitW = this.config.viewportWidth / this.config.mapPixelWidth
+    const fitH = this.config.viewportHeight / this.config.mapPixelHeight
+    return Math.max(this.config.minZoom, fitW, fitH)
+  }
+
+  private clampZoom(): void {
+    const min = this.getEffectiveMinZoom()
+    this.zoom = Math.max(min, Math.min(this.config.maxZoom, this.zoom))
   }
 
   getZoom(): number {
@@ -41,7 +54,8 @@ export class CameraController {
 
   zoomBy(delta: number): void {
     const factor = 1 + delta * 0.001
-    this.zoom = Math.max(this.config.minZoom, Math.min(this.config.maxZoom, this.zoom * factor))
+    this.zoom = this.zoom * factor
+    this.clampZoom()
     this.clampOffset()
   }
 
@@ -62,6 +76,13 @@ export class CameraController {
     this.following = true
   }
 
+  zoomStep(direction: 1 | -1): void {
+    const factor = direction === 1 ? 1.25 : 0.8
+    this.zoom = this.zoom * factor
+    this.clampZoom()
+    this.clampOffset()
+  }
+
   update(deltaMs: number): void {
     if (this.panPaused) {
       this.panResumeTimer -= deltaMs
@@ -72,9 +93,11 @@ export class CameraController {
     }
 
     if (this.following && !this.panPaused) {
+      const desiredX = this.targetX - this.config.viewportWidth / (2 * this.zoom)
+      const desiredY = this.targetY - this.config.viewportHeight / (2 * this.zoom)
       const t = 1 - Math.pow(1 - this.lerpSpeed, deltaMs / 16)
-      this.offsetX += (this.targetX - this.offsetX) * t
-      this.offsetY += (this.targetY - this.offsetY) * t
+      this.offsetX += (desiredX - this.offsetX) * t
+      this.offsetY += (desiredY - this.offsetY) * t
     }
 
     this.clampOffset()
@@ -83,6 +106,7 @@ export class CameraController {
   setViewportSize(width: number, height: number): void {
     this.config.viewportWidth = width
     this.config.viewportHeight = height
+    this.clampZoom()
     this.clampOffset()
   }
 

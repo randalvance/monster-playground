@@ -49,6 +49,19 @@ export class WalkableMask {
     if (tileX < 0 || tileX >= this.walkable[0].length) return false
     return this.walkable[tileY][tileX]
   }
+
+  findRandomWalkablePosition(exclude: Set<string>): { x: number; y: number } | null {
+    const candidates: { x: number; y: number }[] = []
+    for (let ty = 0; ty < this.walkable.length; ty++) {
+      for (let tx = 0; tx < this.walkable[0].length; tx++) {
+        if (this.walkable[ty][tx] && !exclude.has(`${tx},${ty}`)) {
+          candidates.push({ x: tx, y: ty })
+        }
+      }
+    }
+    if (candidates.length === 0) return null
+    return candidates[Math.floor(Math.random() * candidates.length)]
+  }
 }
 
 export class MapRenderer {
@@ -84,6 +97,11 @@ export class MapRenderer {
   isWalkable(tileX: number, tileY: number): boolean {
     if (!this.mask) return true
     return this.mask.isWalkable(tileX, tileY)
+  }
+
+  findRandomWalkablePosition(exclude: Set<string>): { x: number; y: number } | null {
+    if (!this.mask) return null
+    return this.mask.findRandomWalkablePosition(exclude)
   }
 
   draw(ctx: CanvasRenderingContext2D): void {

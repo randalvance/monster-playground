@@ -25,9 +25,10 @@ export class SpriteAnimator {
   }
 
   getSourceRect(): { sx: number; sy: number; sw: number; sh: number } {
+    const row = this.config.row ?? 0
     return {
       sx: this.frameIndex * this.config.frameWidth,
-      sy: 0,
+      sy: row * this.config.frameHeight,
       sw: this.config.frameWidth,
       sh: this.config.frameHeight,
     }

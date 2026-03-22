@@ -177,6 +177,27 @@ export class CharacterAgent {
     return this.config.id
   }
 
+  getConfig(): CharacterConfig {
+    return this.config
+  }
+
+  relocate(x: number, y: number): void {
+    this.occupancy.release(this.tileX, this.tileY)
+    if (this.movementState === 'walking') {
+      this.occupancy.release(this.targetTileX, this.targetTileY)
+    }
+    this.tileX = x
+    this.tileY = y
+    this.targetTileX = x
+    this.targetTileY = y
+    this.pixelX = x
+    this.pixelY = y
+    this.movementState = 'idle'
+    this.moveProgress = 0
+    this.pauseTimer = this.randomPause()
+    this.occupancy.claim(x, y, this.config.id)
+  }
+
   destroy(): void {
     this.occupancy.release(this.tileX, this.tileY)
     if (this.movementState === 'walking') {
