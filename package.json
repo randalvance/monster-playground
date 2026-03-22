@@ -1,0 +1,38 @@
+{
+  "name": "monster-playground",
+  "version": "0.1.0",
+  "description": "2D sprite-based map component with autonomous wandering characters",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "dev": "cd demo && npx vite"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "devDependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "typescript": "^5.7.0",
+    "tsup": "^8.3.0",
+    "vitest": "^2.1.0",
+    "jsdom": "^25.0.0",
+    "@testing-library/react": "^16.1.0"
+  },
+  "license": "MIT"
+}
